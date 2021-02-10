@@ -46,9 +46,9 @@
 
           <h3>Do you want to bet high or low?</h3>
 
-          <button type="button" class="btn btn-primary btn-lg" id="high-button" onlick="choice=true">High</button>
+          <button type="button" class="btn btn-warning btn-lg" id="high-button" onlick="choice=true">High</button>
           &emsp;
-          <button type="button" class="btn btn-primary btn-lg" id="low-button" onlick="choice=false">Low</button>
+          <button type="button" class="btn btn-warning btn-lg" id="low-button" onlick="choice=false">Low</button>
 
           <br>
           <br>
@@ -141,8 +141,10 @@
 
       }
 
-		web3.eth.defaultAccount = web3.eth.getAccounts()[0]
-    console.log(web3.eth.defaultAccoun)
+      //Default account
+      accounts = web3.eth.getAccounts();
+      defaultAccount = accounts[0];
+      console.log(defaultAccount);
 
 	</script>
 
@@ -161,6 +163,8 @@
 
         event.preventDefault();
         
+        //Get bet amount
+        var amount = $('#amount').val();
         /*
         DiceGameContract.methods.winOrLose().send(
           {defaultAccount, }
