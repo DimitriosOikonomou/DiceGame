@@ -1,0 +1,165 @@
+<!doctype html>
+
+<!---->
+<html lang="el">
+
+  <head>
+
+    <!-- Required meta tags -->
+
+    <meta charset="utf-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+
+
+    <!-- Bootstrap CSS -->
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <title>Dice Game</title>
+
+  </head>
+
+  <body>
+
+
+    <br>
+
+    <form id=bet-form>
+      <div class="container-fluid" style="width: 70%; text-align: center; background-color:rgb(64, 175, 240);">
+
+        <div class="form-group">
+
+          <div id="title" style="position: relative;">
+            <img src="img/rotating-dollar-sign.gif" width="100">
+            <span style="font-size: 50px; font-weight: 800; color: green;">Are you ready to gamble?</span>
+            <img src="img/rotating-dollar-sign.gif" width="100">
+          </div>
+
+
+          <div id="die-holder" style="position: relative;">
+            <img src="img/d10.png">
+            <span id="die-value" style="font-size: 55px; color: rgb(64, 175, 240); position: absolute; right: 48.5%; top: 15%;"> 7 </span>
+          </div>
+          <br>
+
+          <h3>Do you want to bet high or low?</h3>
+
+          <button type="button" class="btn btn-primary btn-lg" id="high-button">High</button>
+          &emsp;
+          <button type="button" class="btn btn-primary btn-lg" id="low-button">Low</button>
+
+          <br>
+          <br>
+
+          <h1>Bet amount:</h1>
+          <input value="" type="text" class="form-control-lg" id="amount" placeholder="" style="width: 10%;">
+            
+          <br>
+          <br>
+          <button type="submit" id="roll-button" class="btn btn-warning btn-lg" >Roll!</button>
+          <br>
+          <textarea class="col-lg-4 col-lg-offset-4" placeholder="Betting History!" rows="10" readonly="" style="width: 50%;"></textarea>
+
+        </div>
+      </div>
+  </form>
+
+
+
+    <script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js@1.2.9/dist/web3.min.js"></script>
+    <script src="contractAbi.js"></script>
+
+    <!-- Optional JavaScript -->
+
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+
+
+	<script>
+
+		window.addEventListener('load', async () => { 
+
+			// Modern dapp browsers...
+
+			if (window.ethereum) {
+
+				web3 = new Web3(ethereum);
+
+				try {
+
+					// Request account access if needed
+
+					await window.ethereum.enable();
+          
+          return web3;
+
+				} catch (error) {
+
+					// User denied account access...
+          console.error(error);
+				}
+
+			}
+
+			// Legacy dapp browsers...
+
+			else if (window.web3) {
+
+        window.web3 = new Web3(web3.currentProvider)
+
+			  console.log('Injected web3 detected.');
+
+        return web3;
+
+			}
+
+			// Non-dapp browsers...
+
+			else {
+
+				console.log('Non-Ethereum browser detected. You should consider trying MetaMask!');
+
+			}
+
+		});
+
+      if ( typeof web3 != 'undefined' ) {
+
+        web3 = new Web3(web3.currentProvider);
+
+      } else {
+
+        web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
+
+      }
+
+		web3.eth.defaultAccount = web3.eth.getAccounts()[0]
+
+	</script>
+
+	<script>
+
+      //Address of my contract
+      var contractAddress = "0x10f34fF79E9C2D5C1793Ca775a222b363E4D82cc";
+
+      var ApprovalContract = new web3.eth.Contract(abi,contractAddress);
+
+      //Keeps track of bet
+      var highOrLow = "none";
+
+
+  </script>
+
+
+
+    </body>
+
+</html>

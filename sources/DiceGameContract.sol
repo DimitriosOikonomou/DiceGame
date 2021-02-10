@@ -1,8 +1,8 @@
 pragma solidity >=0.5.0;
 
-contract DiceGameContract {
-    
+contract DiceGameContract {  
     /*Dice game contract*/
+
     address owner;
     bool online;
     
@@ -12,13 +12,15 @@ contract DiceGameContract {
     }
     
     modifier isOwner() {
-        
+        //Checks if user is the owner
+
         require(msg.sender == owner, "Only owner can call this function");
         _;
     }
     
     function withdrawFunds() public isOwner {
-        /*Sends all available funds to the owner*/
+        /*Sends all accumulated funds to the owner*/
+
         msg.sender.transfer(address(this).balance);
     }
     
@@ -27,12 +29,13 @@ contract DiceGameContract {
     }
     
     function mysteryNumber() private view returns (uint) {
+        //Generates random number using the blockhash
+
         uint randomNumber = uint(blockhash(block.number-1))%10 + 1;
         return randomNumber;
     }
     
-    function determineWinner(uint number, bool guess) public pure returns (bool) {
-        
+    function determineWinner(uint number, bool guess) public pure returns (bool) {       
         /* Takes a number (1-10) and a guess (true=high/false=low)
         and returns true if guess matches the number */
         
