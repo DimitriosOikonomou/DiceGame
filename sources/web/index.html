@@ -141,11 +141,6 @@
 
       }
 
-      //Default account
-      accounts = web3.eth.getAccounts();
-      defaultAccount = accounts[0];
-      console.log(defaultAccount);
-
 	</script>
 
 	<script>
@@ -158,6 +153,11 @@
       //Keeps track of betting choise (high=true, low=false)
       //Gets changed when high or low buttons are clicked
       var choice;
+
+      //Default account
+      accounts = web3.eth.getAccounts();
+      defaultAccount = accounts[0];
+      console.log(defaultAccount);
 
       $("#bet-form").submit(function() {
 
