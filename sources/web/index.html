@@ -46,9 +46,9 @@
 
           <h3>Do you want to bet high or low?</h3>
 
-          <button type="button" class="btn btn-primary btn-lg" id="high-button">High</button>
+          <button type="button" class="btn btn-primary btn-lg" id="high-button" onlick="choice=true">High</button>
           &emsp;
-          <button type="button" class="btn btn-primary btn-lg" id="low-button">Low</button>
+          <button type="button" class="btn btn-primary btn-lg" id="low-button" onlick="choice=false">Low</button>
 
           <br>
           <br>
@@ -142,6 +142,7 @@
       }
 
 		web3.eth.defaultAccount = web3.eth.getAccounts()[0]
+    console.log(web3.eth.defaultAccoun)
 
 	</script>
 
@@ -150,10 +151,22 @@
       //Address of my contract
       var contractAddress = "0x10f34fF79E9C2D5C1793Ca775a222b363E4D82cc";
 
-      var ApprovalContract = new web3.eth.Contract(abi,contractAddress);
+      var DiceGameContract = new web3.eth.Contract(abi,contractAddress);
 
-      //Keeps track of bet
-      var highOrLow = "none";
+      //Keeps track of betting choise (high=true, low=false)
+      //Gets changed when high or low buttons are clicked
+      var choice;
+
+      $("#bet-form").submit(function() {
+
+        event.preventDefault();
+        
+        /*
+        DiceGameContract.methods.winOrLose().send(
+          {defaultAccount, }
+        )*/
+
+      });
 
 
   </script>
