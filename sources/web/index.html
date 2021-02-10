@@ -154,14 +154,14 @@
       //Gets changed when high or low buttons are clicked
       var choice;
 
-      //Default account
-      accounts = web3.eth.getAccounts();
-      defaultAccount = accounts[0];
-      console.log(defaultAccount);
+      //Get Default account
+      web3.eth.getAccounts().then(accounts => defaultAccount=accounts[0]);
+
 
       $("#bet-form").submit(function() {
 
         event.preventDefault();
+        
         
         //Get bet amount
         var amount = $('#amount').val();
