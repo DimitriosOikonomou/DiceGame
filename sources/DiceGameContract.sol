@@ -30,6 +30,8 @@ contract DiceGameContract {
     
     function mysteryNumber() private view returns (uint) {
         //Generates random number using the blockhash
+        /*I wanted to use chainlink VRF to get random numbers externally
+          but the chainlink ropsten faucet was not working :(*/
 
         uint randomNumber = uint(blockhash(block.number-1))%10 + 1;
         return randomNumber;
