@@ -46,21 +46,21 @@
 
           <h3>Do you want to bet high or low?</h3>
 
-          <button type="button" class="btn btn-warning btn-lg" id="high-button" onlick="choice=true">High</button>
+          <button type="button" class="btn btn-warning btn-lg" id="high-button">High</button>
           &emsp;
-          <button type="button" class="btn btn-warning btn-lg" id="low-button" onlick="choice=false">Low</button>
+          <button type="button" class="btn btn-warning btn-lg" id="low-button">Low</button>
 
           <br>
           <br>
 
           <h1>Bet amount:</h1>
-          <input value="" type="text" class="form-control-lg" id="amount" placeholder="" style="width: 10%;">
+          <input value="" type="text" class="form-control-lg" id="amount" placeholder="ETH" style="width: 10%;">
             
           <br>
           <br>
           <button type="submit" id="roll-button" class="btn btn-warning btn-lg" >Roll!</button>
           <br>
-          <textarea class="col-lg-4 col-lg-offset-4" placeholder="Betting History!" rows="10" readonly="" style="width: 50%;"></textarea>
+          <textarea id="history-box" class="col-lg-4 col-lg-offset-4" placeholder="" rows="10" readonly="" style="width: 50%; font-weight: 500;">History:</textarea>
 
         </div>
       </div>
@@ -154,22 +154,65 @@
       //Gets changed when high or low buttons are clicked
       var choice;
 
-      //Get Default account
-      var defaultAccount;
-      web3.eth.getAccounts().then(accounts => defaultAccount=accounts[0]);
+      $("#high-button").click(function() {
+        //Sets choice to true and changes colors of the buttons
+        choice = true;
 
+        //Change color of buttons
+        $('#low-button').attr('class', 'btn btn-warning btn-lg');
+        $('#high-button').attr('class', 'btn btn-danger btn-lg');
+      });
+
+      $("#low-button").click(function() {
+        //Inverse of high button
+        choice = false;
+
+        $('#high-button').attr('class', 'btn btn-warning btn-lg');
+        $('#low-button').attr('class', 'btn btn-danger btn-lg');
+      });
 
       $("#bet-form").submit(function() {
 
         event.preventDefault();
-        
+      
+        //Get Default account
+        var defaultAccount;
+        web3.eth.getAccounts().then(accounts => defaultAccount=accounts[0]);
         
         //Get bet amount
         var amount = $('#amount').val();
-        /*
-        DiceGameContract.methods.winOrLose().send(
-          {defaultAccount, }
-        )*/
+
+        DiceGameContract.methods.winOrLose(choice).send(
+          {from: defaultAccount, gas: 5000000, value: web3.utils.toWei(amount, "ether")},
+            function(error, result) {
+
+              if(error) {
+          
+                console.log('error: ' + error);
+
+              } else {
+                
+                //Set die value
+                $("#die-value").text(result[1]);
+
+                if (result[0]==true) {
+                  var wonOrLost = "won";
+                } else {
+                  var wonOrLost = "lost";
+                }
+
+                if (choice==true) {
+                  var highOrLow = "high";
+                } else {
+                  var highOrLow = "low";
+                }
+                
+                //Append result to history box
+                $("#history-box").append(`\n\nResult:  ${wonOrLost}\nYou ${wonOrLost} ${amount.toString()} by guessing ${result[1].toString()} would be ${highOrLow}!`);
+              }
+            }
+        )
+
 
       });
 
