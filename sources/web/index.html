@@ -176,13 +176,15 @@
         event.preventDefault();
       
         //Get Default account
+        /*
         var defaultAccount;
         web3.eth.getAccounts().then(accounts => defaultAccount=accounts[0]);
-        console.log(defaultAccount);
+        console.log(defaultAccount);*/
         
         //Get bet amount
         var amount = $('#amount').val();
 
+        //Call winOrLose method from contract
         DiceGameContract.methods.winOrLose(choice).send(
           {from: defaultAccount, gas: 5000000, value: web3.utils.toWei(amount, "ether")},
             function(error, result) {
