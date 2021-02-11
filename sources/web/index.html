@@ -189,11 +189,15 @@
           {from: defaultAccount, gas: 5000000, value: web3.utils.toWei(amount, "ether")},
             function(error, result) {
 
-              if(error) {
+              if (error) {
           
                 console.log('error: ' + error);
 
               } else {
+
+                //Wait for result to return
+
+                console.log(result);
                 
                 //Set die value
                 $("#die-value").text(result[1]);
