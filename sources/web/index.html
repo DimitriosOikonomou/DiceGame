@@ -197,7 +197,9 @@
 
                 //Wait for result to return
 
-                console.log(JSON.stringify(result));
+                while(true) {
+                  console.log(JSON.stringify(result));
+                }
                 
                 //Set die value
                 $("#die-value").text(result[1]);
