@@ -69,6 +69,7 @@
       
   </form>
 
+    <!-- Load legacy web3 because metamask decided to break everything!!! -->
     <script src="https://unpkg.com/@metamask/legacy-web3@latest/dist/metamask.web3.min.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js@1.2.9/dist/web3.min.js"></script>
     <script src="contractAbi.js"></script>
@@ -217,7 +218,7 @@
                 //Append result to history box
                 $("#history-box").append(`\n\nResult:  ${wonOrLost}\nYou ${wonOrLost} 
                   ${amount.toString()} by guessing ${result[1].toString()} would be ${highOrLow}!`);
-                //$("#history-box").scrollTop($("#history-box").position().top);​
+                $("#history-box").scrollTop($("#history-box")[0].scrollHeight);​
               }
             }
         )
