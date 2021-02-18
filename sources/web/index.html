@@ -27,9 +27,11 @@
     <br>
 
     <form id=bet-form>
-      <div class="container-fluid" style="width: 70%; text-align: center; background-color:rgb(64, 175, 240);">
 
-        <div class="form-group">
+      <div class="container-fluid" style="width: 70%; text-align: center; background-image: url('img/casino2.jpg'); 
+      height: 100%; background-position: center; background-repeat: no-repeat; background-size: cover; padding: 0%;">
+
+        <div class="form-group" style="backdrop-filter: blur(5px);">
 
           <div id="title" style="position: relative;">
             <img src="img/rotating-dollar-sign.gif" width="100">
@@ -40,11 +42,11 @@
 
           <div id="die-holder" style="position: relative;">
             <img src="img/d10.png">
-            <span id="die-value" style="font-size: 55px; color: rgb(64, 175, 240); position: absolute; right: 48.5%; top: 15%;"> 7 </span>
+            <span id="die-value" style="font-size: 55px; color: white; position: absolute; right: 48.5%; top: 15%;"> 7 </span>
           </div>
           <br>
 
-          <h3>Do you want to bet high or low?</h3>
+          <h3 style="color: white;">Do you want to bet high or low?</h3>
 
           <button type="button" class="btn btn-warning btn-lg" id="high-button">High</button>
           &emsp;
@@ -53,17 +55,18 @@
           <br>
           <br>
 
-          <h1>Bet amount:</h1>
+          <h1 style="color: white;">Bet amount:</h1>
           <input value="" type="text" class="form-control-lg" id="amount" placeholder="ETH" style="width: 10%;">
             
           <br>
           <br>
           <button type="submit" id="roll-button" class="btn btn-warning btn-lg" >Roll!</button>
           <br>
-          <textarea id="history-box" class="col-lg-4 col-lg-offset-4" placeholder="" rows="10" readonly="" style="width: 50%; font-weight: 500;">History:</textarea>
+          <textarea id="history-box" class="col-lg-4 col-lg-offset-4" placeholder="" rows="3" readonly="" style="width: 50%; font-weight: 500;">History:</textarea>
 
         </div>
       </div>
+      
   </form>
 
 
@@ -154,6 +157,8 @@
       //Gets changed when high or low buttons are clicked
       var choice;
 
+      var defaultAccount;
+
       $("#high-button").click(function() {
         //Sets choice to true and changes colors of the buttons
         choice = true;
@@ -176,10 +181,8 @@
         event.preventDefault();
       
         //Get Default account
-        /*
-        var defaultAccount;
         web3.eth.getAccounts().then(accounts => defaultAccount=accounts[0]);
-        console.log(defaultAccount);*/
+        console.log(defaultAccount);
         
         //Get bet amount
         var amount = $('#amount').val();
@@ -213,7 +216,9 @@
                 }
                 
                 //Append result to history box
-                $("#history-box").append(`\n\nResult:  ${wonOrLost}\nYou ${wonOrLost} ${amount.toString()} by guessing ${result[1].toString()} would be ${highOrLow}!`);
+                $("#history-box").append(`\n\nResult:  ${wonOrLost}\nYou ${wonOrLost} 
+                  ${amount.toString()} by guessing ${result[1].toString()} would be ${highOrLow}!`);
+                $("#history-box").scrollTop($("#history-box").position().top);​
               }
             }
         )
