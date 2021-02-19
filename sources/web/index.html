@@ -209,7 +209,7 @@
 
               } else {
 
-                //Wait for result to return
+                //Wait for results to return
                 let transactionReceipt = null
                 while (transactionReceipt == null) {
                   //Check for transaction receipt
@@ -219,12 +219,29 @@
                 }
 
                 //Read Bet Event
-                console.log(transactionReceipt);
+                var results = web3.eth.abi.decodeLog([
+                    {
+                      "indexed": false,
+                      "internalType": "bool",
+                      "name": "won",
+                      "type": "bool"
+                    },
+                    {
+                      "indexed": false,
+                      "internalType": "uint256",
+                      "name": "mysteryNumber",
+                      "type": "uint256"
+                    }
+                  ],
+                  transactionReceipt.logs[0]);
+
+                  console.log(results);
 
                 //Set die value
-                $("#die-value").text(result[1]);
-
-                if (result[0]==true) {
+                $("#die-value").text(results[1]);
+                
+                //Prepare values to write in history box
+                if (results[0]==true) {
                   var wonOrLost = "won";
                 } else {
                   var wonOrLost = "lost";
@@ -236,8 +253,8 @@
                   var highOrLow = "low";
                 }
                 
-                //Append result to history box
-                $("#history-box").append(`\n\nResult:  ${wonOrLost}\nYou ${wonOrLost} ${amount.toString()} by guessing ${result[1].toString()} would be ${highOrLow}!`);
+                //Append results to history box
+                $("#history-box").append(`\n\nResult:  ${wonOrLost}\nYou ${wonOrLost} ${amount.toString()} by guessing ${results[1]} would be ${highOrLow}!`);
                 $("#history-box").scrollTop($("#history-box")[0].scrollHeight);
               }
             }
