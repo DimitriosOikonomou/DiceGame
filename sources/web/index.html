@@ -189,7 +189,7 @@
         event.preventDefault();
       
         //Get Default account
-        web3.eth.getAccounts().then(accounts => defaultAccount=accounts[0]);
+        await web3.eth.getAccounts().then(accounts => defaultAccount=accounts[0]);
         if (typeof defaultAccount == 'undefined') {
           alert("Could not get account address! Please try again!");
           return;
