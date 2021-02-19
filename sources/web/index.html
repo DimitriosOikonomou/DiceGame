@@ -216,9 +216,8 @@
                 }
                 
                 //Append result to history box
-                $("#history-box").append(`\n\nResult:  ${wonOrLost}\nYou ${wonOrLost} 
-                  ${amount.toString()} by guessing ${result[1].toString()} would be ${highOrLow}!`);
-                $("#history-box").scrollTop($("#history-box")[0].scrollHeight);​
+                $("#history-box").append(`\n\nResult:  ${wonOrLost}\nYou ${wonOrLost} ${amount.toString()} by guessing ${result[1].toString()} would be ${highOrLow}!`);
+                $("#history-box").scrollTop($("#history-box")[0].scrollHeight);
               }
             }
         )
