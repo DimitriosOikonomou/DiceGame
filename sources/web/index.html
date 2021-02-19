@@ -218,7 +218,7 @@
         if (amount=='') {
           alert("Please set a bet amount!");
           return;
-        } else if (amount.charAt(0)="-") {
+        } else if (amount.charAt(0)=="-") {
           alert("Bet amount cannot be negative!");
           return;
         } else if (isNan(parseFloat(amount))) {
