@@ -203,11 +203,19 @@
           return;
         }
 
+        //Check contract balance
+        balance = await web3.eth.getBalance(contractAddress);
+        if (parseInt(balance) < parseInt(web3.utils.toWei(amount, "ether"))) {
+            alert(`Contract has not enough balance to match bet amount.\n Current contract balance: ${balance} \nPlease lower your bet amount!`);
+            return;
+        }
+
         //Check if choise is set
         if (typeof choice == 'undefined') {
           alert("Please choose high or low!");
           return;
         }
+
 
         //Call winOrLose method from contract
         DiceGameContract.methods.winOrLose(choice).send(
