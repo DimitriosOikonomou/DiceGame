@@ -227,8 +227,8 @@
                   $("#die-value").text(Math.floor(Math.random() * 10 + 1));
                   //Check for transaction receipt
                   transactionReceipt = await web3.eth.getTransactionReceipt(transactionHash);
-                  //Sleep for half a second
-                  await sleep(500);
+                  //Sleep for 1/4 second
+                  await sleep(250);
                 }
 
                 //Read Bet Event
@@ -247,8 +247,6 @@
                     }
                   ],
                   transactionReceipt.logs[0].data);
-
-                  console.log(results);
 
                 //Set die value
                 $("#die-value").text(results[1]);
