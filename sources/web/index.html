@@ -212,9 +212,11 @@
         //Check contract balance
         balance = await web3.eth.getBalance(contractAddress);
         if (parseInt(balance) < parseInt(web3.utils.toWei(amount, "ether"))) {
+
             alert(`Contract has not enough balance to match bet amount.\n 
-            Current contract balance: ${web3.utils.toEther(balance, "wei")} ETH.\n
+            Current contract balance: ${web3.utils.fromWei(balance, "ether")} ETH.\n
             Please lower your bet amount!`);
+            
             return;
         }
 
