@@ -175,6 +175,11 @@
         $('#high-button').attr('class', 'btn btn-warning btn-lg');
         $('#low-button').attr('class', 'btn btn-danger btn-lg');
       });
+      
+      //Helper function used while waiting for transaction to be mined
+      const sleep = (milliseconds) => {
+        return new Promise(resolve => setTimeout(resolve, milliseconds))
+      };
 
       $("#bet-form").submit(function() {
 
@@ -182,7 +187,10 @@
       
         //Get Default account
         web3.eth.getAccounts().then(accounts => defaultAccount=accounts[0]);
-        console.log(defaultAccount);
+        if (typeof defaultAccount == 'undefined') {
+          alert("Could not get account address! Please try again!");
+          return;
+        }
         
         //Get bet amount
         var amount = $('#amount').val();
@@ -190,7 +198,7 @@
         //Call winOrLose method from contract
         DiceGameContract.methods.winOrLose(choice).send(
           {from: defaultAccount, gas: 5000000, value: web3.utils.toWei(amount, "ether")},
-            function(error, result) {
+            function(error, transactionHash) {
 
               if (error) {
           
@@ -199,7 +207,17 @@
               } else {
 
                 //Wait for result to return
-                
+                let transactionReceipt = null
+                while (transactionReceipt == null) {
+                  //Check for transaction receipt
+                  transactionReceipt = await web3.eth.getTransactionReceipt(transactionHash);
+                  //Sleep for half a second
+                  await sleep(500);
+                }
+
+                //Read Bet Event
+                console.log(transactionReceipt);
+
                 //Set die value
                 $("#die-value").text(result[1]);
 
@@ -226,10 +244,8 @@
       });
 
 
-  </script>
+    </script>
 
-
-
-    </body>
+  </body>
 
 </html>
