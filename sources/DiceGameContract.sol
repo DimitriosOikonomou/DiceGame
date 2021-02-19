@@ -18,6 +18,10 @@ contract DiceGameContract {
         _;
     }
     
+    //Event to keep track of transaction history 
+    //since transaction function doesn't return values
+    event Bet(bool won, uint mysteryNumber);
+    
     function withdrawFunds() public isOwner {
         /*Sends all accumulated funds to the owner*/
 
@@ -50,6 +54,32 @@ contract DiceGameContract {
             return false;
         }
     }
+    
+    function winOrLose (bool guess) external payable returns (bool, uint) {
+        /* Use true for a higher guess, false for a lower guess */
+        
+        require(online == true, "The game is not online");
+        require(msg.sender.balance > msg.value, "Insufficient funds");
+        require(address(this).balance > msg.value, "Contract is out of money! :(");
+        
+        uint mysteryNumber_ = mysteryNumber();
+        bool isWinner = determineWinner(mysteryNumber_, guess);
+        
+        if (isWinner == true) {
+            /* Player won */
+            msg.sender.transfer(msg.value * 2);
+            
+            emit Bet(true, mysteryNumber_);
+            return (true, mysteryNumber_);
+            
+        } else {
+            /*Player lost */
+            emit Bet(false, mysteryNumber_);
+            return (false, mysteryNumber_);
+            
+        }
+    }
+}
     
     function winOrLose (bool guess) external payable returns (bool, uint) {
         /* Use true for a higher guess, false for a lower guess */
