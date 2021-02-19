@@ -221,6 +221,9 @@
         } else if (amount.charAt(0)="-") {
           alert("Bet amount cannot be negative!");
           return;
+        } else if (isNan(parseFloat(amount))) {
+          alert("Bet amount is not a valid number!");
+          return;
         }
 
         //Check contract balance
