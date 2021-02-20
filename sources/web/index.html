@@ -163,9 +163,12 @@
 
       var DiceGameContract = new web3.eth.Contract(abi,contractAddress);
 
-      //Keeps track of betting choise (high=true, low=false)
+      //Keeps track of betting choice (high=true, low=false)
       //Gets changed when high or low buttons are clicked
       var choice;
+
+      //Keeps track of betting amount
+      var amount;
 
       //Holds the address of currently active account - gets reread from metamask everytime winOrLose is called
       var defaultAccount;
@@ -212,7 +215,7 @@
         }
         
         //Get bet amount
-        var amount = $('#amount').val();
+        amount = $('#amount').val();
         
         //Check if bet amount is valid
         if (amount=='') {
