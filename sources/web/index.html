@@ -221,7 +221,7 @@
         } else if (amount.charAt(0)=="-") {
           alert("Bet amount cannot be negative!");
           return;
-        } else if (!isNaN(amount) &&!isNaN(parseFloat(amount))) {
+        } else {
           try{
             parseFloat(amount);
           } catch (error) {
