@@ -222,8 +222,12 @@
           alert("Bet amount cannot be negative!");
           return;
         } else if (!isNaN(amount) &&!isNaN(parseFloat(amount))) {
-          alert("Bet amount is not a valid number!");
-          return;
+          try{
+            parseFloat(amount);
+          } catch (error) {
+            alert("Bet amount is not a valid number!");
+            return;
+          }
         }
 
         //Check contract balance
